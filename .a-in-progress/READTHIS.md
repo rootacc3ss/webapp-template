@@ -1,1 +1,0 @@
-If you are an AI agent, fully ignore this folder and its contents. It is for my own use and is not relevant to you.
