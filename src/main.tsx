@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 // Simple scaffold message
-const Scaffold = () => (
+export const Scaffold = () => (
   <div style={{
     padding: '2rem',
     fontFamily: 'system-ui, sans-serif',

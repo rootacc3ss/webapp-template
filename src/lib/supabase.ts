@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import type { User } from '@supabase/supabase-js'
 import type { Database } from '@/types/supabase'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
@@ -18,7 +19,11 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
 
 // Auth helpers
 export const auth = {
-  signUp: async (email: string, password: string, options?: { data?: any }) => {
+  signUp: async (
+    email: string,
+    password: string,
+    options?: { data?: Record<string, unknown> }
+  ) => {
     return await supabase.auth.signUp({
       email,
       password,
@@ -42,9 +47,10 @@ export const auth = {
     return user
   },
   
-  onAuthStateChange: (callback: (user: any) => void) => {
-    return supabase.auth.onAuthStateChange((event, session) => {
+  onAuthStateChange: (callback: (user: User | null) => void) => {
+    return supabase.auth.onAuthStateChange((_event, session) => {
+      void _event
       callback(session?.user ?? null)
     })
   },
-} 
+}

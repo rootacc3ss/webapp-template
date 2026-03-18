@@ -1,8 +1,8 @@
-# No Code Web-App Template - Based on lovable.dev and bolt.new scaffold package
+# Web App Template
 
 ## Overview
 
-This is a comprehensive full-stack web application template built as a foundation for creating modern, scalable, and feature-rich applications similar to Lovable.dev. It provides a pre-configured environment with industry best practices, cutting-edge tools, and essential integrations to accelerate your development process.
+This is a comprehensive full-stack web application template built as a foundation for creating modern, scalable, and feature-rich applications. It provides a pre-configured environment with industry best practices, cutting-edge tools, and essential integrations to accelerate your development process.
 
 **Please note that all the additional tools I am working on adding, such as MCP servers, knowledge bases, etc. are in the a-in-progress folder and should be ignored. They are not finished; you may delete that file as of this build and no instructions are provided for those tools at this time.**
 
@@ -11,63 +11,62 @@ This is a comprehensive full-stack web application template built as a foundatio
 ## 🚀 Complete Technology Stack
 
 ### **Frontend Core**
-- **React ^18.3.1** with **TypeScript ^5.5.3** for robust type-safe development
-- **Vite ^5.4.1** as the lightning-fast build tool and development server
-- **React Router DOM ^6.26.2** for seamless client-side navigation
+- **React ^19.2.4** with **TypeScript ^5.9.3** for robust type-safe development
+- **Vite ^8.0.0** as the lightning-fast build tool and development server
+- **React Router DOM ^7.13.1** for seamless client-side navigation
 
 ### **Backend & Database**
-- **Supabase ^2.49.4** (Authentication, PostgreSQL Database, Real-time subscriptions, Storage)
+- **Supabase ^2.99.2** (Authentication, PostgreSQL Database, Real-time subscriptions, Storage)
 - **Supabase Edge Functions** (Deno runtime for serverless functions)
 - **Supabase Auth UI React ^0.4.7** for pre-built authentication components
 
 ### **Styling & UI Framework**
-- **Tailwind CSS ^3.4.11** for utility-first styling
-- **Tailwind Merge ^2.5.2** for conditional class merging
+- **Tailwind CSS ^4.2.1** for utility-first styling
+- **Tailwind Merge ^3.5.0** for conditional class merging
 - **Tailwind Animate ^1.0.7** for smooth CSS animations
-- **@tailwindcss/typography ^0.5.15** for rich text styling
-- **PostCSS ^8.4.47** and **Autoprefixer ^10.4.20** for CSS processing
+- **@tailwindcss/typography ^0.5.19** for rich text styling
+- **PostCSS ^8.5.8** and **Autoprefixer ^10.4.27** for CSS processing
 
 ### **Component Libraries & UI**
 - **shadcn/ui** components built on **Radix UI** for accessible, customizable components:
   - Dialog, Dropdown Menu, Avatar, Checkbox, Label, Progress, Select, Separator, Slot, Switch, Tabs, Toast, Tooltip
-- **Material UI (MUI) ^6.1.1** with **MUI Icons ^6.1.1** for additional robust components
-- **Lucide React ^0.462.0** for beautiful, consistent icons
+- **Material UI (MUI) ^7.3.9** with **MUI Icons ^7.3.9** for additional robust components
+- **Lucide React ^0.577.0** for beautiful, consistent icons
 - **Embla Carousel ^8.3.0** for touch-friendly carousels and sliders
-- **Sonner ^1.5.0** for elegant toast notifications
-- **React Day Picker ^8.10.1** for date selection interfaces
-- **Vaul ^0.9.3** for drawer components
+- **Sonner ^2.0.7** for elegant toast notifications
+- **React Day Picker ^9.14.0** for date selection interfaces
+- **Vaul ^1.1.2** for drawer components
 
 ### **State Management & Data Fetching**
-- **TanStack React Query ^5.56.2** for server state management and caching
-- **React Hook Form ^7.53.0** for performant form handling
-- **Zod ^3.23.8** for schema validation and type safety
-- **@hookform/resolvers ^3.9.0** for form validation integration
+- **TanStack React Query ^5.90.21** for server state management and caching
+- **React Hook Form ^7.71.2** for performant form handling
+- **Zod ^4.3.6** for schema validation and type safety
+- **@hookform/resolvers ^5.2.2** for form validation integration
 
 ### **Styling Utilities**
 - **clsx ^2.1.1** for conditional className joining
 - **class-variance-authority ^0.7.1** for component variant management
-- **Framer Motion ^11.5.4** for sophisticated animations and interactions
+- **Framer Motion ^12.38.0** for sophisticated animations and interactions
 
 ### **Data Visualization**
-- **Recharts ^2.12.7** for React-based charts and graphs
-- **React Resizable Panels ^2.1.3** for flexible layout panels
+- **Recharts ^3.8.0** for React-based charts and graphs
+- **React Resizable Panels ^4.7.3** for flexible layout panels
 - **React Masonry CSS ^1.0.16** for masonry-style layouts
 - **Nivo** (Core, Bar, Line, Pie charts) for advanced data visualization
 - **D3.js ^7.9.0** for custom data visualizations
 
 ### **Theming & Visual Effects**
-- **next-themes ^0.3.0** for dark/light theme switching with system preference detection
-- **date-fns ^3.6.0** for date manipulation and formatting
+- **next-themes ^0.4.6** for dark/light theme switching with system preference detection
+- **date-fns ^4.1.0** for date manipulation and formatting
 - **Custom CSS variables** for consistent theming across components
 
 ### **Payment Processing**
-- **Stripe Integration** with **@stripe/stripe-js ^4.7.0** and **@stripe/react-stripe-js ^2.8.0**
+- **Stripe Integration** with **@stripe/stripe-js ^8.10.0** and **@stripe/react-stripe-js ^5.6.1**
 - **Secure payment processing** ready for production deployment
 
 ### **Development Tools & Quality**
-- **ESLint ^8.57.0** with **TypeScript ESLint** for code quality
-- **@vitejs/plugin-react-swc ^3.5.0** for fast React refresh
-- **lovable-tagger ^1.1.7** for component tagging and organization
+- **ESLint ^9.39.4** with **TypeScript ESLint** for code quality
+- **@vitejs/plugin-react-swc ^4.3.0** for fast React refresh
 - **Comprehensive TypeScript configuration** with strict type checking
 
 ## ✨ Key Features
