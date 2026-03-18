@@ -4,9 +4,9 @@
 
 This is a comprehensive full-stack web application template built as a foundation for creating modern, scalable, and feature-rich applications. It provides a pre-configured environment with industry best practices, cutting-edge tools, and essential integrations to accelerate your development process.
 
-**Please note that all the additional tools I am working on adding, such as MCP servers, knowledge bases, etc. are in the a-in-progress folder and should be ignored. They are not finished; you may delete that file as of this build and no instructions are provided for those tools at this time.**
-
 **Built for extensibility** - easily add new packages, integrations, features, and more.
+
+> **Note:** Previous work-in-progress tools and features have been archived and are preserved in the `pre-reno` branch for reference.
 
 ## 🚀 Complete Technology Stack
 
