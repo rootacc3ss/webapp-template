@@ -1,56 +1,71 @@
 import { loadStripe } from '@stripe/stripe-js'
 
-const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY?.trim()
+const stripeCheckoutEndpoint = import.meta.env.VITE_STRIPE_CHECKOUT_ENDPOINT?.trim()
+const stripePortalEndpoint = import.meta.env.VITE_STRIPE_PORTAL_ENDPOINT?.trim()
 
 if (!stripePublishableKey) {
   console.warn('Stripe publishable key not found. Payment features will be disabled.')
 }
 
-// Initialize Stripe
+// Keep Stripe optional so the starter can run before payment setup exists.
 export const stripePromise = stripePublishableKey 
   ? loadStripe(stripePublishableKey)
   : null
 
-// Stripe helper functions
-export const stripe = {
-  createCheckoutSession: async (priceId: string, customerId?: string) => {
-    // This would typically call your backend API
-    // which creates a Stripe checkout session
-    const response = await fetch('/api/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        priceId,
-        customerId,
-      }),
-    })
-    
-    if (!response.ok) {
-      throw new Error('Failed to create checkout session')
-    }
-    
-    return response.json()
-  },
+type StripeSessionPayload = Record<string, string | undefined>
 
-  createPortalSession: async (customerId: string) => {
-    // This would typically call your backend API
-    // which creates a Stripe customer portal session
-    const response = await fetch('/api/create-portal-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        customerId,
-      }),
-    })
-    
-    if (!response.ok) {
-      throw new Error('Failed to create portal session')
-    }
-    
-    return response.json()
-  },
+// Use explicit endpoints so payments do not silently assume a missing local /api server.
+async function postStripeSession(
+  endpoint: string | undefined,
+  payload: StripeSessionPayload,
+  actionLabel: string,
+  envVarName: string
+) {
+  if (!endpoint) {
+    throw new Error(
+      `Stripe ${actionLabel} is not configured. Set ${envVarName} in .env before using the Stripe helpers.`
+    )
+  }
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to create Stripe ${actionLabel}. Make sure ${envVarName} points to a working API route or Edge Function.`
+    )
+  }
+
+  return response.json()
 } 
+
+async function createCheckoutSession(priceId: string, customerId?: string) {
+  return postStripeSession(
+    stripeCheckoutEndpoint,
+    { priceId, customerId },
+    'checkout session',
+    'VITE_STRIPE_CHECKOUT_ENDPOINT'
+  )
+}
+
+async function createBillingPortalSession(customerId: string) {
+  return postStripeSession(
+    stripePortalEndpoint,
+    { customerId },
+    'billing portal session',
+    'VITE_STRIPE_PORTAL_ENDPOINT'
+  )
+}
+
+// Keep the legacy helper name for compatibility while exposing a clearer Stripe-specific name.
+export const stripe = {
+  createCheckoutSession,
+  createBillingPortalSession,
+  createPortalSession: createBillingPortalSession,
+}

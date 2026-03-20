@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* These base tokens keep the starter readable before a product-specific theme exists. */
+:root {
+  color-scheme: dark;
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: #020617;
+  color: #f8fafc;
+}
+
+/* Paint a complete background immediately so the app does not flash white before React mounts. */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.22), transparent 34%),
+    radial-gradient(circle at bottom, rgba(59, 130, 246, 0.18), transparent 30%),
+    linear-gradient(180deg, #0f172a 0%, #020617 58%, #020617 100%);
+}
+
+/* Keep the root element full-height so layout primitives can rely on the viewport. */
+#root {
+  min-height: 100vh;
+}

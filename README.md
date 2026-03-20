@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a comprehensive full-stack web application template built as a foundation for creating modern, scalable, and feature-rich applications. It provides a pre-configured environment with industry best practices, cutting-edge tools, and essential integrations to accelerate your development process.
+This repository is a frontend-first scaffold for starting a modern React + Vite application. It ships with a minimal starter screen, a working Tailwind pipeline, and optional helper modules for Supabase and Stripe so you can layer in routes, data, and payments as your product takes shape.
 
 **Built for extensibility** - easily add new packages, integrations, features, and more.
 
@@ -71,44 +71,39 @@ This is a comprehensive full-stack web application template built as a foundatio
 
 ## ✨ Key Features
 
-- 🌓 **Advanced Theme System** - Dark/light mode with system preference detection and smooth transitions
-- 🔐 **Complete Authentication** - Supabase Auth with social providers and email/password
-- 💳 **Payment Processing** - Full Stripe integration with webhooks and subscription management
-- 📱 **Fully Responsive** - Mobile-first design that works beautifully on all devices
-- 🎨 **Modern Design System** - Consistent, accessible components with variant support
-- ✨ **Smooth Animations** - Framer Motion integration for delightful user experiences
-- 📊 **Rich Data Visualization** - Multiple charting libraries for comprehensive analytics
-- 🚀 **Performance Optimized** - Fast loading with code splitting and lazy loading
-- 🔍 **SEO Ready** - Meta tags, structured data, and search engine optimization
-- 🛠️ **Developer Experience** - Hot reload, TypeScript support, and comprehensive tooling
+- 🎯 **Minimal Starter Screen** - A clean entry point in `src/main.tsx` that is easy to replace as your app grows
+- 🎨 **Tailwind Ready** - Tailwind CSS is wired into the app with a base stylesheet and starter theme tokens
+- 🔐 **Optional Supabase Helpers** - Supabase utilities stay dormant until you add environment variables
+- 💳 **Optional Stripe Helpers** - Stripe session helpers use explicit endpoint env vars instead of assuming a local `/api` server
+- 🧱 **Type-Safe Foundation** - Strict TypeScript, ESLint, and Vite are set up for day-one development
+- 🧰 **Large Package Head Start** - UI, forms, animation, charts, theming, and utility libraries are already installed
 
 ## 📁 Project Structure
 
 ```
+/public
+  favicon.svg          # Default favicon used by the starter
 /src
-  /components
-    /ui              # Reusable UI components (shadcn/ui)
-    /layout          # Layout components (header, footer, navigation)
-    theme-provider.tsx # Theme management component
+  main.tsx             # Minimal starter screen and React entry point
   /lib
-    supabase.ts      # Supabase client and auth helpers
-    stripe.ts        # Stripe integration and payment utilities
-    utils.ts         # Shared utility functions
-  /pages             # Page components for different routes
-  /hooks
-    use-auth.ts      # Authentication hook and user management
+    supabase.ts       # Optional Supabase client and auth helpers
+    stripe.ts         # Optional Stripe session helpers
+    utils.ts          # Shared utility functions
   /styles
-    globals.css      # Global styles and Tailwind imports
+    globals.css       # Tailwind import and base app styling
   /types
-    supabase.ts      # Auto-generated Supabase types
+    supabase.ts       # Placeholder for generated Supabase types
+  vite-env.d.ts       # Vite environment typings
 ```
+
+Create feature folders such as `components`, `pages`, `hooks`, or `providers` as your application architecture grows.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Supabase account and project
-- Stripe account (for payments)
+- Supabase account and project (only if you plan to use Supabase)
+- Stripe account (only if you plan to use payments)
 
 ### Installation
 
@@ -124,11 +119,13 @@ This is a comprehensive full-stack web application template built as a foundatio
    ```
 
 3. **Environment Setup**
-   Copy `.env.example` to `.env` and fill in your credentials:
+   Copy `env.example` to `.env` and fill in only the credentials you need. The starter screen works without these values, but the optional Supabase and Stripe helpers require them.
    ```env
    VITE_SUPABASE_URL=your_supabase_url
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
    VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+   VITE_STRIPE_CHECKOUT_ENDPOINT=https://your-app.example/api/create-checkout-session
+   VITE_STRIPE_PORTAL_ENDPOINT=https://your-app.example/api/create-portal-session
    ```
 
 4. **Start Development Server**
@@ -136,7 +133,7 @@ This is a comprehensive full-stack web application template built as a foundatio
    npm run dev
    ```
 
-5. **Supabase Setup** (if using local development)
+5. **Supabase Setup** (optional, after `supabase init`)
    ```bash
    npm run supabase:start
    npm run supabase:gen-types
@@ -161,6 +158,8 @@ npm run supabase:migrate   # Run migrations
 npm run supabase:gen-types # Generate TypeScript types
 ```
 
+These commands require a local Supabase project to be initialized first.
+
 ## 🔧 Adding New Features
 
 ### **Installing New Packages**
@@ -169,22 +168,25 @@ npm install <package-name>
 ```
 
 ### **Common Extension Points**
-- **UI Components**: Add to `/src/components/ui/`
-- **Custom Hooks**: Add to `/src/hooks/`
+- **App Structure**: Create `/src/components/`, `/src/pages/`, `/src/hooks/`, or `/src/providers/` as needed
+- **Entry Flow**: Expand `/src/main.tsx` with routing, providers, and layout composition
 - **Utilities**: Extend `/src/lib/utils.ts`
-- **Pages**: Add to `/src/pages/`
-- **Types**: Add to `/src/types/`
+- **Types**: Add app-specific types to `/src/types/`
 
 ### **Supabase Integration Patterns**
-- Use the pre-configured client in `/src/lib/supabase.ts`
+- Use the optional client in `/src/lib/supabase.ts`
+- Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` before calling the helpers
 - Leverage React Query for data fetching and caching
-- Utilize auto-generated TypeScript types from your schema
+- Generate `src/types/supabase.ts` from your schema when ready
+- Run `supabase init` before local CLI commands
 - Implement Row Level Security (RLS) for data protection
 
 ### **Stripe Integration Best Practices**
 - Use the configured client in `/src/lib/stripe.ts`
+- Set `VITE_STRIPE_CHECKOUT_ENDPOINT` and `VITE_STRIPE_PORTAL_ENDPOINT` to your own API routes or Edge Functions
 - Implement server-side webhooks for secure payment processing
 - Connect Stripe customers with Supabase user authentication
+- Keep `STRIPE_SECRET_KEY` on the server only
 - Test with Stripe's test mode before going live
 
 ## 🔒 Security & Production Readiness
@@ -192,14 +194,14 @@ npm install <package-name>
 - **Environment Variables**: All sensitive data uses environment variables
 - **TypeScript**: Full type safety throughout the application
 - **ESLint**: Code quality and consistency enforcement
-- **Supabase RLS**: Row-level security for data protection
-- **Stripe Webhooks**: Secure payment processing verification
+- **Supabase RLS**: Available once you adopt Supabase-backed data
+- **Stripe Webhooks**: Required once you adopt Stripe-backed billing
 - **HTTPS Ready**: Configured for secure deployment
 
 ## 📚 Documentation & Resources
 
 ### **Learn More About Key Technologies**
-- [React 18 Documentation](https://react.dev)
+- [React Documentation](https://react.dev)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Vite Guide](https://vitejs.dev/guide/)
 - [Tailwind CSS](https://tailwindcss.com/docs)
@@ -216,9 +218,10 @@ npm install <package-name>
 
 ## ⚠️ Important Notes
 
-- **Production Requirements**: Ensure all environment variables are properly configured
-- **Database Migrations**: Run Supabase migrations before deploying
-- **Stripe Webhooks**: Configure webhook endpoints for production
+- **Production Requirements**: Configure only the environment variables for the integrations you actually use
+- **Supabase CLI**: Run `supabase init` before using the local Supabase scripts
+- **Database Migrations**: Apply Supabase migrations before deploying database changes
+- **Stripe Endpoints**: Configure checkout and portal endpoints before calling the Stripe helpers
 - **Security**: Review and implement proper Row Level Security policies
 - **Performance**: Consider implementing code splitting for larger applications
 
@@ -288,6 +291,9 @@ cp env.example .env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJ0eXAiOiJKV1QiLCJhbGc...
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
+VITE_STRIPE_CHECKOUT_ENDPOINT=https://your-app.example/api/create-checkout-session
+VITE_STRIPE_PORTAL_ENDPOINT=https://your-app.example/api/create-portal-session
+# Server-only secret. Do not expose this in the browser.
 STRIPE_SECRET_KEY=sk_test_...
 VITE_ANALYTICS_ID=your_analytics_id
 ```
@@ -299,7 +305,7 @@ npm install              # Install all NPM packages
 
 #### **3. Supabase Configuration**
 ```bash
-# For local development (optional)
+# For local development (optional, after `supabase init`)
 npm run supabase:start
 npm run supabase:gen-types
 
@@ -317,6 +323,7 @@ npm run supabase:gen-types
 
 **Stripe Requirements:**
 - Create Stripe account and get API keys
+- Create checkout and billing portal endpoints in your backend or Edge Functions
 - Set up webhook endpoints for your domain
 - Configure product/pricing information
 - Test with Stripe's test mode first
@@ -342,16 +349,16 @@ npm run supabase:gen-types
 □ Clone repository
 □ Run `npm install`
 □ Copy `env.example` to `.env`
-□ Configure environment variables
-□ Set up Supabase project
-□ Configure Stripe account
+□ Configure only the environment variables you need
+□ Set up Supabase project (if using Supabase)
+□ Configure Stripe account and endpoints (if using Stripe)
 □ Test local development server
-□ Verify authentication works
-□ Test payment flow (in test mode)
+□ Verify authentication works (if enabled)
+□ Test payment flow in test mode (if enabled)
 □ Deploy to staging environment
 □ Configure production environment variables
 □ Set up webhook endpoints
 □ Go live! 🚀
 ```
 
-**Ready to build something amazing?** This template provides everything you need to create a production-ready web application with modern technologies and best practices. 🎉
+**Ready to build?** This template gives you a clean React/Vite starting point plus a large library set you can opt into as the product evolves.
