@@ -1,0 +1,19 @@
+# =============================================================================
+# Nixpacks Build Configuration for Coolify Deployment
+# =============================================================================
+# Vite 8, rolldown, @vitejs/plugin-react-swc, and eslint-visitor-keys all
+# require Node.js ^20.19.0 || >=22.12.0 (some need ^22.13.0).
+#
+# Nixpacks' default nixpkgs archive pins Node 22 to v22.11.0 which is too old.
+# We override the nixpkgsArchive to a verified commit that provides Node 22.13.1.
+#
+# Reference: https://coolify.io/docs/applications/build-packs/nixpacks/node-versioning
+# Verified commit: 51ad838b -> Node.js 22.13.1
+# =============================================================================
+
+[phases.setup]
+# Override the nixpkgs archive to get Node.js 22.13.1 (satisfies >=22.12.0)
+nixpkgsArchive = '51ad838b03a05b1de6f9f2a0fffecee64a9788ee'
+nixPkgs = ['nodejs_22', 'npm-9_x']
+nixLibs = ['libuuid', 'libGL']
+aptPkgs = ['curl', 'wget']

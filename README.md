@@ -101,7 +101,7 @@ Create feature folders such as `components`, `pages`, `hooks`, or `providers` as
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ and npm
+- Node.js `^20.19.0 || >=22.12.0` and npm
 - Supabase account and project (only if you plan to use Supabase)
 - Stripe account (only if you plan to use payments)
 
@@ -228,10 +228,30 @@ npm install <package-name>
 ## 🚀 Deployment
 
 This application is optimized for deployment on:
+- **Coolify (Nixpacks, production-ready)**
 - **Vercel** (recommended for frontend)
 - **Netlify** (alternative frontend hosting)
 - **Supabase** (backend services)
 - **Custom VPS** (full control deployment)
+
+### Coolify Deployment Notes
+
+This template includes the same deployment hardening used in `archive/sv-v3` so Nixpacks builds succeed on Coolify:
+
+- `package.json` includes an `engines.node` requirement: `^20.19.0 || >=22.12.0`
+- `.node-version` is set to `22`
+- `nixpacks.toml` overrides the default Nixpacks `nixpkgsArchive` to a commit with Node `22.13.1`
+
+Why this matters: the default Nixpacks Node 22 version in some snapshots is `22.11.0`, which can fail Vite 8 dependency engine checks during install/build.
+
+For a standard Coolify setup:
+
+1. Create an app in Coolify from this Git repository.
+2. Keep buildpack as Nixpacks (Coolify auto-detects `nixpacks.toml`).
+3. Set required environment variables in Coolify (at minimum, any `VITE_` variables your app actually uses at build time).
+4. Deploy.
+
+If you use secrets like `STRIPE_SECRET_KEY`, set them in Coolify environment variables (server-side usage only). Do not expose secret keys in frontend code.
 
 ---
 
